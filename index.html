@@ -3,7 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <title>CO2-Infoverein</title>
+    <!--JavaScript zur dynamischen Ausrichtung des Menü je nach Sprache rechts (Arabisch) oder links (Deutsch)-->
+    <script>
+      const html = document.documentElement;
+      const userLang = navigator.language || navigator.userLanguage;
+      const navList = document.getElementById('Menuesteuerung');
 
+      if (userLang.startsWith('ar')) {
+        html.setAttribute('lang', 'ar');
+        html.setAttribute('dir', 'rtl');
+        navList.classList.add('ms-auto'); // für RTL: schiebt Liste nach rechts
+      } else {
+        html.setAttribute('lang', 'de');
+        html.setAttribute('dir', 'ltr');
+        navList.classList.add('me-auto'); // für LTR: schiebt Liste nach links
+      }
+    </script>
     <!-- Bootstrap CSS, diese Datei bringt das grundlegende Design-Framework mit und
          stellt Buttons, Tabellen, Navigationen optisch moderner und responsive dar.
          Verwendet vordefinierte CSS-Klassen wie:
@@ -27,8 +42,14 @@
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
           <a class="navbar-brand" href="#">
-             <img src="img/Logo.jpg" alt="Logo" width="60" height="60" class="d-inline-block align-text-top">
-           CO2-Infoverein
+            <img
+              src="img/Logo.jpg"
+              alt="Logo"
+              width="60"
+              height="60"
+              class="d-inline-block align-text-top"
+            />
+            CO2-Infoverein
           </a>
           <button
             class="navbar-toggler"
@@ -42,21 +63,28 @@
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <!--Navbar wurde mit ID versehen damit JavaScript Zugriff hat-->
+            <ul class="navbar-nav mb-2 mb-lg-0" id="Menuesteuerung">
               <li class="nav-item">
                 <form class="d-flex">
-                  <!-- Suchefeld erstellen-->
+                  <!-- Suchefeld erstellen, über pattern werden zulässige Zeichen definiert um Codeinjection zu verhindern-->
                   <input
                     class="form-control me-2"
                     type="text"
                     name="suche"
-                    placeholder="Suche"
+                    placeholder="Search"
+                    pattern="^[\w\säöüÄÖÜß\-]{2,30}$"
+                    title="Sonderzeichen sind nicht zulässig"
                   />
                 </form>
               </li>
               <!-- Einbinden von Links wie z.B. Instagram oder Kontaktdaten-->
               <li class="nav-item">
-                <a class="nav-link" href="https://www.instagram.com/CO2-Infoverein">Instagram</a>
+                <a
+                  class="nav-link"
+                  href="https://www.instagram.com/CO2-Infoverein"
+                  >Instagram</a
+                >
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="Kontact.html">Kontakt</a>
@@ -67,18 +95,21 @@
       </nav>
     </header>
 
-<!-- Contentbereich mit Menü und Links, Bootstrap nav-pills angepasste Farben -->
-<nav class="bg-light py-2">
-  <ul class="nav nav-pills justify-content-center gap-3">
-    <li class="nav-item">
-      <a class="nav-link bg-success text-white" href="Unsere Story.html">Unsere Story</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link bg-success text-white" href="CO2-Tabelle.html">CO2-Tabelle</a>
-    </li>
-  </ul>
-</nav>
-
+    <!-- Contentbereich mit Menü und Links, Bootstrap nav-pills angepasste Farben -->
+    <nav class="bg-light py-2">
+      <ul class="nav nav-pills justify-content-center gap-3">
+        <li class="nav-item">
+          <a class="nav-link bg-success text-white" href="Unsere Story.html"
+            >Unsere Story</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link bg-success text-white" href="CO2-Tabelle.html"
+            >CO2-Tabelle</a
+          >
+        </li>
+      </ul>
+    </nav>
 
     <!-- Kapselung mit Hilfe von Sections, class mt-5 sorgt für mehr Abstand zum Menü-->
     <section class="mt-5">
@@ -105,19 +136,23 @@
     <!-- Tabellenbereich, data-search aktiviert Suchfeld, data-filter-control sorgt für Filterfunktion,
          data-search-clear-button leert das Suchfeld-->
     <table
-      data-toggle="table" 
-      data-search="true" 
+      data-toggle="table"
+      data-search="true"
       data-filter-control="true"
       data-show-search-clear-button="true"
       class="table table-bordered table-striped"
     >
       <thead>
         <tr>
-          <!-- Einfügen der Spaltennamen der Tabelle-->
+          <!-- Einfügen der Spaltennamen der Tabelle und Filter/Sortierfunktionen-->
           <th data-field="land" data-sortable="true" data-filter-control="select">
             Land
           </th>
-          <th data-field="unternehmen" data-sortable="true" data-filter-control="select">
+          <th
+            data-field="unternehmen"
+            data-sortable="true"
+            data-filter-control="select"
+          >
             Unternehmen
           </th>
           <th data-field="ausstoss">CO2-Ausstoß/Jahr</th>
@@ -148,7 +183,7 @@
       </tbody>
     </table>
 
-    <!-- Footerbereich mit rechtlichen Hinweisen, Hintergrund grau mit Padding (Abstand von 3)-->
+    <!-- Footerbereich mit rechtlichen Hinweisen, Hintergrund grau mit Padding (Abstand von 3) -->
     <footer class="bg-light p-3">
       <nav>
         <!-- Horizontale Anordnung der Hinweise, Abstand über gap-->
